@@ -13,3 +13,9 @@ A hacktoberfest project, The kowala.co api and frontend
 {"username": "TheUsername", "password": "ThePassword"}
 ### Normal Response
 {"token": "TheToken"}
+
+## /api/v1/user/me (GET)
+### Request Data
+Headers: {"Authorization": "TheToken"}
+### Normal Response
+{"id": "TheId", "username": "TheUsername", "role": 0, "verified": false}
