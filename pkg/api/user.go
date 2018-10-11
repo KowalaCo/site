@@ -21,6 +21,12 @@ type User struct {
 	Verified       bool
 }
 
+func (user User) checkPassword(password string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(user.HashedPassword), []byte(password))
+	correct := err == nil
+	return correct
+}
+
 func UsernameInUse(username string) (bool, error) {
 	row := db.QueryRow("SELECT COUNT(*) FROM users WHERE lower(username) = lower($1)", username)
 	var count int
@@ -140,5 +146,10 @@ func getUserByKeyValue(key string, value string) (User, error) { // stops code d
 
 func GetUserById(id string) (User, error) {
 	user, err := getUserByKeyValue("id", id)
+	return user, err
+}
+
+func GetUserByUsername(username string) (User, error) {
+	user, err := getUserByKeyValue("username", username)
 	return user, err
 }
