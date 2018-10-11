@@ -18,6 +18,7 @@ func StartRouter() {
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/api/v1/user/create", CreateUserEndpoint).Methods("POST")
 	router.HandleFunc("/api/v1/user/authenticate", AuthenticateUserEndpoint).Methods("POST")
+	router.HandleFunc("/api/v1/user/me", MeUserEndpoint).Methods("GET")
 	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(*port), router))
 }
 

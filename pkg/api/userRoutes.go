@@ -69,3 +69,23 @@ func AuthenticateUserEndpoint(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(200)
 	json.NewEncoder(w).Encode(AuthenticateUserResponse{Token: user.Token})
 }
+
+type MeUserResponse struct {
+	Id       string `json:"id"`
+	Username string `json:"username"`
+	Role     int    `json:"role"`
+	Verified bool   `json:"verified"`
+}
+
+func MeUserEndpoint(w http.ResponseWriter, r *http.Request) {
+	token := r.Header.Get("Authorization")
+	user, err := GetUserByToken(token)
+	if err != nil {
+		RespondError(w, errors.New("Invalid token"))
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	json.NewEncoder(w).Encode(MeUserResponse{Id: user.Id, Username: user.Username, Role: user.Role, Verified: user.Verified})
+}

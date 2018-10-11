@@ -153,3 +153,8 @@ func GetUserByUsername(username string) (User, error) {
 	user, err := getUserByKeyValue("username", username)
 	return user, err
 }
+
+func GetUserByToken(token string) (User, error) {
+	user, err := getUserByKeyValue("token", token)
+	return user, err
+}
